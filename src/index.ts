@@ -1,7 +1,7 @@
 import { server } from "./server";
 
 const port: any = process.env.PORT ?? process.env.$PORT ?? 3002;
-const host = process.env.HOST || "127.0.0.1";
+const host = process.env.HOST || "0.0.0.0";
 
 server
   .listen({

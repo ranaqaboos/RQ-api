@@ -1,25 +1,37 @@
 
+
+https://user-images.githubusercontent.com/106505615/177250115-084e18be-6237-4011-bd1d-c4d13b157a3c.mp4
+
+
 # RQ-API
 An electronic educational for kinds platform concerned with providing academic study materials
 
 -Learn while you are at home at the lowest prices-
 ## Features
 
-- login
+- user:
+add account ,delete account, registertion ,login ,get users
 
-- logout
+- course:
+add course,delete course,search course,get course
 
-- course
+- feedback:
+add feedback, get feedback
 
-- feedback
+- reservation :
+add reservation, get reservation, delete reservation, verfiy
 
-- reservation course
+- payment:
+add payment, get payment, delete payment
 
-- reservation teacher
+- parent:
+add parent, get parent
 
-- payment
+- teacher:
+add teacher ,get teacher
 
-- view course
+- Student:
+add Student ,view course
 
 
 ## Stack
@@ -29,7 +41,7 @@ Language: `TypeScript`
 
 Web Server: `Fastify`
 
-ORM: `mongoos`
+ORM: `prisma`
 
 DB: `mongo`
 

@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id  String     @id @default(auto()) @map("_id") @db.ObjectId
+  username String     @unique
+  password String
+  role     RoleUser
+  parent   Parent[]
+  student  Student[]
+  tracher  Teacher[]
+  feedback Feedback[]
+
+  @@map("users")
+}
+
+model Parent {
+  parent_id   String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  childeren   String[]
+  student     StudentType[]
+  user        User          @relation(fields: [user_id], references: [user_id])
+  user_id     String
+  Reservation Reservation[]
+  Feedback    Feedback[]
+  payment     Payment[]
+  feedback    feedback[]
+
+}
+
+model Student {
+  student_id String       @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  user       User         @relation(fields: [user_id], references: [user_id])
+  user_id    String
+  course     CourseType[]
+  feedback   Feedback[]
+
+  //Parent          Parent?       @relation(fields: [parentParent_id], references: [parent_id])
+  //parentParent_id String?       @db.ObjectId
+  Reservation Reservation[]
+}
+
+type StudentType {
+  name String
+}
+
+model Teacher {
+  teacher_id   String        @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  descaription String
+  user         User          @relation(fields: [user_id], references: [user_id])
+  user_id      String
+  Feedback     Feedback[]
+  Reservation  Reservation[]
+  course       Course[]
+}
+
+type teacher {
+
+  name         String
+  descaription String
+}
+
+model Course {
+  course_id    String        @id @default(auto()) @map("_id") @db.ObjectId
+  name         String?
+  category     String?
+  descaription String?
+  price        Int?
+  createdAt    DateTime?     @default(now())
+  Feedback     Feedback[]
+  teacher      teacher[]
+  viewCourse   ViewCourse[]
+  Teacher      Teacher?      @relation(fields: [teacher_id], references: [teacher_id])
+  teacher_id   String?
+  payment      Payment[]
+  Reservation  Reservation[]
+}
+
+type CourseType {
+  name         String?
+  category     String?
+  descaription String?
+
+}
+
+model Reservation {
+  reservation_id String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  course         Course?  @relation(fields: [course_id], references: [course_id])
+  course_id      String
+  parent_id      String?
+  parent         Parent?  @relation(fields: [parent_id], references: [parent_id])
+  Teacher        Teacher? @relation(fields: [teacher_id], references: [teacher_id])
+  teacher_id     String?
+  student        Student? @relation(fields: [student_id], references: [student_id])
+  student_id     String
+}
+
+type reservation {
+  name String
+
+}
+
+model Feedback {
+  feedback_id  String   @id @default(auto()) @map("_id") @db.ObjectId
+  descaription String?
+  teacher_id   String?  @db.ObjectId
+  parent_id    String?  @db.ObjectId
+  course_id    String?  @db.ObjectId
+  course       Course?  @relation(fields: [course_id], references: [course_id])
+  teacher      Teacher? @relation(fields: [teacher_id], references: [teacher_id])
+  parent       Parent?  @relation(fields: [parent_id], references: [parent_id])
+  User         User?    @relation(fields: [users_id], references: [user_id])
+  users_id     String?  @db.ObjectId
+  student      Student? @relation(fields: [student_id], references: [student_id])
+  student_id   String?  @db.ObjectId
+}
+
+type feedback {
+
+  descaription String
+}
+
+model Payment {
+  Payment_id String  @id @default(auto()) @map("_id") @db.ObjectId
+  paice      Int?
+  parent_id  String? @db.ObjectId
+  Course     Course? @relation(fields: [course_id], references: [course_id])
+  course_id  String? @db.ObjectId
+  Parent     Parent? @relation(fields: [parent_id], references: [parent_id])
+}
+
+type paymentType {
+  paice Int?
+}
+
+model ViewCourse {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  student_id String?
+  course_id  String? @db.ObjectId
+  Course     Course? @relation(fields: [course_id], references: [course_id])
+
+}
+
+type viewCourse {
+  id         String  @map("_id") @db.ObjectId
+  student_id String?
+  course_id  String?
+}
+
+enum RoleUser {
+  Teacher
+  Student
+  Parent
+}

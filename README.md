@@ -7,6 +7,8 @@ https://user-images.githubusercontent.com/106505615/177250115-084e18be-6237-4011
 An electronic educational for kinds platform concerned with providing academic study materials
 
 -Learn while you are at home at the lowest prices-
+## Heroku
+https://ranaqaboos.herokuapp.com/docs/static/index.html
 ## Features
 
 - user:

@@ -14,7 +14,7 @@ const feedback = Type.Object({
   });
   export default async function (server: FastifyInstance) {
     server.route({
-		method: 'PUT',
+		method: 'GET',
 		url: '/feedback',
 		schema: {
 			summary: 'view feedback ',

@@ -9,7 +9,7 @@ const Parent = Type.Object({
   });
   export default async function (server: FastifyInstance) {
     server.route({
-        method: "PUT",
+        method: "GET",
         url: "/Parent",
         schema: {
           summary: "view Parent ",

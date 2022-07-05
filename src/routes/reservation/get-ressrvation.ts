@@ -13,7 +13,7 @@ const reservation = Type.Object({
 
   export default async function (server: FastifyInstance) {
     server.route({
-        method: "PUT",
+        method: "GET",
         url: "/Reservation",
         schema: {
           summary: "view Reservation ",

@@ -10,7 +10,7 @@ const Payment = Type.Object({
 
 export default async function (server: FastifyInstance) {
     server.route({
-        method: "PUT",
+        method: "GET",
         url: "/payment/payment",
         schema: {
           summary: "view payment ",

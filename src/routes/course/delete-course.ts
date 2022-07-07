@@ -23,7 +23,7 @@ export default async function (server: FastifyInstance) {
         handler: async (request, reply) => {
           jwt.verify(request.headers.authorization as string,'secret',(err:any,decoded:any)=>{
            if(decoded.role!=="Teachrt")
-           reply.send({"mas":"......"})
+           reply.send({"mas":"Invalid"})
           })
           const { course_id } = request.params as Course;
           if (!ObjectId.isValid(course_id)) {

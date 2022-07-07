@@ -3,6 +3,7 @@ import { FastifyInstance } from 'fastify';
 import{prismaClient}from '../../prisma'
 import{Reservation}from'@prisma/client';
 import teacher from '../teacher/teacher';
+import jwt from "jsonwebtoken";
 const reservation = Type.Object({
    name: Type.String(),
    course_id: Type.String(),
@@ -23,6 +24,10 @@ const reservation = Type.Object({
       },
       handler: async (request, reply) => {
         const reservation = request.body as Reservation;
+        jwt.verify(request.headers.authorization as string,'secret',(err:any,decoded:any)=>{
+          if(decoded.role!=="Parent")
+          reply.send({"mas":"Invalid"})
+         })
         await prismaClient.reservation.create(
           { data:{reservation_id:reservation.reservation_id,
             name:reservation.name,
@@ -46,16 +51,5 @@ const reservation = Type.Object({
       }
     
     })
-  // server.route({
-  //   method: "PUT",
-  //   url: "/Reservation/Reservation",
-  //   schema: {
-  //     summary: "view Reservation ",
-  //     tags: ["reservation"],
-  //   },
-  //   handler: async (request, reply) => {
-  //     return prismaClient.reservation.findMany();
-  //   },
-  // }); 
   }
   

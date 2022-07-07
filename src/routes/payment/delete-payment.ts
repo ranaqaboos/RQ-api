@@ -13,7 +13,7 @@ export default async function (server: FastifyInstance) {
    url: "/Payment_id",
    schema: {
      summary: "Deletes a Payment id",
-     tags: ["Payment"],
+     tags: ["payment"],
      params: Payment,
    },
    handler: async (request, reply) => {

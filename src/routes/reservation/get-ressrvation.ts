@@ -3,6 +3,7 @@ import { FastifyInstance } from 'fastify';
 import{prismaClient}from '../../prisma'
 import{Reservation}from'@prisma/client';
 import teacher from '../teacher/teacher';
+import jwt from"jsonwebtoken";
 const reservation = Type.Object({
    name: Type.String(),
    course_id: Type.String(),
@@ -20,6 +21,10 @@ const reservation = Type.Object({
           tags: ["reservation"],
         },
         handler: async (request, reply) => {
+          jwt.verify(request.headers.authorization as string,'secret',(err:any,decoded:any)=>{
+            if(decoded.role!=="Parent")
+            reply.send({"mas":"Invalid"})
+           }) 
           return prismaClient.reservation.findMany();
         },
       });

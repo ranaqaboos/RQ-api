@@ -2,7 +2,7 @@ import { Static, Type } from "@sinclair/typebox";
 import { FastifyInstance } from "fastify";
 import { prismaClient } from "../../prisma";
 import { Course } from "@prisma/client";
-
+import jwt from "jsonwebtoken";
 import _ from "lodash";
 
 const Course = Type.Object({
@@ -12,6 +12,7 @@ const Course = Type.Object({
     price: Type.Number(),
   });
   export default async function (server: FastifyInstance) {
+    
     server.route({
         method: "GET",
         url: "/course",
@@ -20,6 +21,10 @@ const Course = Type.Object({
           tags: ["course"],       
         },
         handler: async (request, reply) => {
+          jwt.verify(request.headers.authorization as string,'secret',(err:any,decoded:any)=>{
+            if(decoded.role!=="Teachrt")
+            reply.send({"mas":"Invalid"})
+           })
           return prismaClient.course.findMany();
         },
       });
